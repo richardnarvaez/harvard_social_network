@@ -1,0 +1,136 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block title %}TwitUNetwork{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link href="{% static 'network/styles.css' %}" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        
+        <script src="https://cdn.tailwindcss.com"></script>
+        </head>
+    <body>
+        <div class="py-4">
+            <a class="nav-link flex justify-center items-center" title="Home" href="{% url 'index' %}" style="font-weight: bold"> <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-twitter" viewBox="0 0 16 16">
+            <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"/>
+            </svg>   <span class="ml-2">TwitUNetwork</span></a>
+        </div>
+        <nav class="fixed flex justify-center z-10 bottom-0 navbar navbar-expand-lg navbar-expand-md navbar-light bg-light w-full" style="box-shadow: 0px -3px 10px #00000024;
+    background: white;">
+                    
+                    <div class="flex items-center">
+                        {% if user.is_authenticated %}
+                            <a class="nav-link flex text-base bg-blue-200 text-blue-800 rounded-full" title="Following" href="{% url 'following' username=user.username %}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-plus-fill mr-2" viewBox="0 0 16 16">
+                                <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                                <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
+                                </svg> Following
+                            </a>
+                            <a class="nav-link flex text-base bg-gray-200 text-gray-800 rounded-full ml-2" title="My Profile" href="{% url 'profile' username=user.username %}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-plus-fill mr-2" viewBox="0 0 16 16">
+                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                                </svg>Profile</i></a>    
+                            <a class="nav-link flex text-base bg-red-200 text-red-800 rounded-full ml-2" title="Log Out" href="{% url 'logout' %}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-plus-fill mr-2" viewBox="0 0 16 16">
+                                 <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
+                                <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+                                </svg> LogOut</a>
+                        {% else %}
+                             <a class="nav-link text-base bg-gray-200 rounded-full px-4 py-2 font-bold" title="Log In" href="{% url 'login' %}">Login</a>
+                        {% endif %}
+                        </div>
+        </nav>
+        <div class="container">
+            <div class="body">
+                {% block body %}
+                {% endblock %}
+            </div>
+        </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+        <script>
+            $('.likebutton').click(function(){
+                var catid;
+                var total;
+                var value;
+                catid = $(this).data("catid");
+                
+
+                $.ajax(
+                {
+                    type:"GET",
+                    url: "/likepost",
+                    data:{
+                            post_id: catid
+                    },
+                    success: function( data ) 
+                    {
+                        total = $('#'+ catid).attr("data-total")
+                        if ($('#'+catid).attr("data-value") == 'Like'){
+                            $( '#liked'+catid ).text((parseInt(total) + 1));
+                            $( '#heart'+catid ).css('color', 'red')
+                            $('#'+catid).attr("data-total", parseInt(total) + 1)
+                            $('#'+catid).attr("data-value", 'Unlike')
+                        }
+                        else{
+                            $( '#liked'+catid ).text((parseInt(total) - 1));
+                            $( '#heart'+catid ).css('color', 'black')
+                            $('#'+catid).attr("data-total", parseInt(total) - 1)
+                            $('#'+catid).attr("data-value", 'Like')
+                        }
+                    }
+                })
+
+                
+            })
+
+            
+            $('.delete-post').click(function () {
+                var postId = $(this).data("catid")
+
+                $.ajax({
+                type: "POST",
+                url: `/${postId}/delete`,
+                data: {
+                    csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value,
+                    post_id: postId
+                },
+                success: function(data) {
+                    $(`.post-object${postId}`).remove()
+                }
+                })
+            })
+
+            $('.edit-post').click(function (event) {
+                event.preventDefault()
+                var postId = $(this).data("catid")
+                var content = $('#textarea-edit-' + postId).val()
+                $.ajax({
+                type: "POST",
+                url: `/posts/${postId}/edit`,
+                data: {
+                    csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value,
+                    post_id: postId,
+                    textarea: content
+                },
+                success: function(data) {
+                    $('.modal-edit').modal('hide')
+                    var content = $('#textarea-edit-' + postId).val()
+                    console.log(content)
+                    console.log("success", `.post-object-content${postId}`)
+                    $(`.post-object-content${postId}`).html(content)
+                }
+                })
+            })
+
+            $(function() {
+                $( 'a[href$="#"]' ).each(function() {
+                    $( this ).attr( 'href','javascript:void(0);' )
+                });
+            });
+        </script> 
+    </body>
+</html>
+
