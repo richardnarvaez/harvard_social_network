@@ -8,6 +8,7 @@ class User(AbstractUser):
     image_url = models.CharField(max_length=500, default='https://cdn.dribbble.com/users/72948/screenshots/1631127/cell311.png')
 
 class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     target = models.ForeignKey('User', on_delete=models.CASCADE, related_name='folowers')
     follower = models.ForeignKey('User', on_delete=models.CASCADE, related_name='targets')
 

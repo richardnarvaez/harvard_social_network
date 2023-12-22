@@ -52,27 +52,38 @@ def logout_view(request):
 
 
 def register(request):
-    if request.method == "POST":
-        username = request.POST["username"]
-        email = request.POST["email"]
+    if request.method == 'POST':
+        username = request.POST.get("username")  # Utiliza el método 'get' para acceder al campo 'username' de forma segura
+        if username is None:
+            username = None
 
-        password = request.POST["password"]
-        confirmation = request.POST["confirmation"]
+        email = request.POST.get("email")
+        if email is None:
+            email = None
+
+        password = request.POST.get("password")
+        if password is None:
+            password = None
+
+        confirmation = request.POST.get("confirmation")
+        if confirmation is None:
+            confirmation = None
+        
         if not username:
             return render(request, "network/register.html", {
-                "message": "*Not username."})
+                "message": "*Por favor, rellene el formulario."})
         
         if not email:
             return render(request, "network/register.html", {
-                "message": "*Not email."})
+                "message": "*Por favor, rellene el formulario."})
 
         if not password:
             return render(request, "network/register.html", {
-                "message": "*Not password."})
+                "message": "*Por favor, rellene el formulario."})
 
         if password != confirmation:
             return render(request, "network/register.html", {
-                "message": "*Passwords must match."})
+                "message": "*Las contraseñas deben coincidir."})
 
         try:
             email_already = User.objects.filter(email=email)
@@ -81,11 +92,11 @@ def register(request):
                 user.save()
             else:
                 return render(request, "network/register.html", {
-                "message": "*Email already taked."
+                "message": "*El correo electrónico ya existe."
             })
         except IntegrityError:
             return render(request, "network/register.html", {
-                "message": "*Username already taked."
+                "message": "*El nombre de usuario ya existe."
             })
         login(request, user)
         return redirect("config", username)
