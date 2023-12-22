@@ -1,7 +1,7 @@
 
 from django.urls import path
-from django.conf.urls import url
-
+# from django.conf.urls import url
+from django.urls import re_path
 from . import views
 
 # app_name = "network"
@@ -18,5 +18,5 @@ urlpatterns = [
     path("following/<str:username>", views.following, name='following'),
     path("posts/<int:post_id>/edit", views.edit, name="edit"),
     path("post-comment/<str:action>", views.newComment, name="post-comment"),
-    url(r'^likepost/$', views.like_post, name='like-post')
+    re_path(r'^likepost/$', views.like_post, name='like-post')
 ]
